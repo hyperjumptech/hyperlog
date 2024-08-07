@@ -1,6 +1,8 @@
 package hyperlog
 
 import (
+	"fmt"
+	"os"
 	"sync"
 )
 
@@ -44,7 +46,10 @@ func Fire(entry *LogEntry) {
 	for fl, hooks := range hookMap {
 		if fl&entry.Level.Flag() == entry.Level.Flag() {
 			for _, hook := range hooks {
-				hook.FireHook(entry)
+				err := hook.FireHook(entry)
+				if err != nil {
+					_, _ = os.Stderr.WriteString(fmt.Sprintf("error while firing hook. got %s\n", err))
+				}
 			}
 		}
 	}

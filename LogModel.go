@@ -1,7 +1,6 @@
 package hyperlog
 
 import (
-	"HyperIDP/pkg/masking"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -89,22 +88,6 @@ type LogEntry struct {
 	Time       time.Time         `json:"time"`
 	Message    string            `json:"msg"`
 	Attributes map[string]string `json:"attrs,omitempty"`
-}
-
-func (e *LogEntry) Mask() *LogEntry {
-	le := &LogEntry{
-		Level:      e.Level,
-		Time:       e.Time,
-		Message:    masking.Default.MaskSentence(e.Message),
-		Attributes: nil,
-	}
-	if e.Attributes != nil && len(e.Attributes) > 0 {
-		le.Attributes = make(map[string]string)
-		for k, v := range e.Attributes {
-			le.Attributes[k] = masking.Default.MaskSentence(v)
-		}
-	}
-	return le
 }
 
 func (e *LogEntry) String() string {

@@ -40,9 +40,6 @@ func Trace(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(TraceLevel, nil, msg)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -59,9 +56,6 @@ func Debug(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(DebugLevel, nil, fmt.Sprint(str...))
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -78,9 +72,6 @@ func Info(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(InfoLevel, nil, fmt.Sprint(str...))
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -97,9 +88,6 @@ func Warn(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(WarnLevel, nil, fmt.Sprint(str...))
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -116,9 +104,6 @@ func Error(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(ErrorLevel, nil, fmt.Sprint(str...))
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -135,9 +120,6 @@ func Fatal(str ...interface{}) {
 			return
 		}
 		entry := NewLogEntry(FatalLevel, nil, fmt.Sprint(str...))
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -155,9 +137,6 @@ func Tracef(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(TraceLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -174,9 +153,6 @@ func Debugf(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(DebugLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -193,9 +169,6 @@ func Infof(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(InfoLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -212,9 +185,6 @@ func Warnf(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(WarnLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -231,9 +201,6 @@ func Errorf(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(ErrorLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -250,9 +217,6 @@ func Fatalf(format string, args ...interface{}) {
 			return
 		}
 		entry := NewLogEntryf(FatalLevel, nil, format, args...)
-		if Mask {
-			entry = entry.Mask()
-		}
 		if OutFormat == JSONFormat {
 			_, _ = GetWriter().Write([]byte(entry.JSONString() + "\n"))
 		} else {
@@ -281,9 +245,6 @@ type LogEngineImpl struct {
 
 func (engine *LogEngineImpl) toString(lvl LogLevel, mask bool, str string) (string, *LogEntry) {
 	entry := NewLogEntry(lvl, engine.attributes, str)
-	if mask {
-		entry = entry.Mask()
-	}
 	if OutFormat == JSONFormat {
 		return entry.JSONString() + "\n", entry
 	}
@@ -295,9 +256,6 @@ func (engine *LogEngineImpl) toString(lvl LogLevel, mask bool, str string) (stri
 
 func (engine *LogEngineImpl) toStringf(lvl LogLevel, mask bool, format string, args ...interface{}) (string, *LogEntry) {
 	entry := NewLogEntryf(lvl, engine.attributes, format, args...)
-	if mask {
-		entry = entry.Mask()
-	}
 	if OutFormat == JSONFormat {
 		return entry.JSONString() + "\n", entry
 	}
